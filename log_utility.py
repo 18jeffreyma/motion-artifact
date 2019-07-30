@@ -1,4 +1,5 @@
 import tensorflow as tf
+import numpy as np
 
 # adapted from https://github.com/grishasergei/conviz/
 def prime_powers(n):
