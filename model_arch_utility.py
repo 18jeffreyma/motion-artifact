@@ -1,3 +1,5 @@
+import tensorflow as tf
+import tensorflow.contrib as tf_contrib
 
 # Xavier : tf_contrib.layers.xavier_initializer()
 # He : tf_contrib.layers.variance_scaling_initializer()
