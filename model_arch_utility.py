@@ -15,7 +15,7 @@ weight_regularizer = tf_contrib.layers.l2_regularizer(0.0001)
 ##################################################################################
 
 def conv(x, channels, kernel=4, stride=2, padding='SAME', use_bias=True, scope='conv_0'):
-    with tf.variable_scope(scope):
+    with tf.variable_scope(scope, reuse=tf.AUTO_REUSE):
         x = tf.layers.conv2d(inputs=x, filters=channels,
                              kernel_size=kernel, kernel_initializer=weight_init,
                              kernel_regularizer=weight_regularizer,
@@ -24,7 +24,7 @@ def conv(x, channels, kernel=4, stride=2, padding='SAME', use_bias=True, scope='
         return x
 
 def fully_connected(x, units, use_bias=True, scope='fully_0'):
-    with tf.variable_scope(scope):
+    with tf.variable_scope(scope, reuse=tf.AUTO_REUSE):
         x = flatten(x)
         x = tf.layers.dense(x, units=units, kernel_initializer=weight_init, kernel_regularizer=weight_regularizer, use_bias=use_bias)
 
@@ -106,7 +106,7 @@ def batch_norm(x, is_training=True, scope='batch_norm'):
     return tf_contrib.layers.batch_norm(x,
                                         decay=0.9, epsilon=1e-05,
                                         center=True, scale=True, updates_collections=None,
-                                        is_training=is_training, scope=scope)
+                                        is_training=is_training, scope=scope, reuse=tf.AUTO_REUSE)
 
 ##################################################################################
 # Loss function
