@@ -1,6 +1,6 @@
 import pathlib
 import random
-Import tensorflow as tf
+import tensorflow as tf
 
 
 # Given a directory of data of the form: ~/data/labels/images.png

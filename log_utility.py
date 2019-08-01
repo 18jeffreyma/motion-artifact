@@ -40,3 +40,102 @@ def pca(X, num_observations=64, n_dimensions = 50):
     pca = tf.matmul(u, sigma)
     pca = tf.transpose(pca)
     return pca
+
+@tfplot.wrap
+def plot_conv_weights(weights, channels_all=True):
+    """
+    Plots convolutional filters
+    :param weights: numpy array of rank 4
+    :param channels_all: boolean, optional
+
+    """
+    w_min = np.min(weights)
+    w_max = np.max(weights)
+
+    channels = [0]
+    # make a list of channels if all are plotted
+    if channels_all:
+        channels = range(weights.shape[2])
+
+    # get number of convolutional filters
+    num_filters = weights.shape[3]
+
+    # get number of grid rows and columns
+    grid_r, grid_c = log_util.get_grid_dim(num_filters)
+    
+    # create figure and axes
+    fig, axes = plt.subplots(min([grid_r, grid_c]), max([grid_r, grid_c]))
+
+    # iterate channels
+    for channel in channels:
+        # iterate filters inside every channel
+        for l, ax in enumerate(axes.flat):
+            # get a single filter
+            img = weights[:, :, channel, l]
+            # put it on the grid
+            ax.imshow(img, vmin=w_min, vmax=w_max, interpolation='nearest', cmap='seismic')
+            
+            # remove any labels from the axes
+            ax.set_xticks([])
+            ax.set_yticks([])
+            
+    plt.close(fig)
+    
+    return fig
+
+@tfplot.wrap
+def plot_conv_output(conv_img, name):
+    """
+    Makes plots of results of performing convolution
+    :param conv_img: numpy array of rank 4
+    :param name: string, name of convolutional layer
+    :return: nothing, plots are saved on the disk
+    """
+    w_min = np.min(conv_img)
+    w_max = np.max(conv_img)
+
+    # get number of convolutional filters
+    num_filters = conv_img.shape[3]
+
+    # get number of grid rows and columns
+    grid_r, grid_c = log_util.get_grid_dim(num_filters)
+    
+
+    if (min([grid_r, grid_c]) == 1 and max([grid_r, grid_c]) == 1):
+        
+        fig, ax = plt.subplots(figsize=(24,24))   
+        fig.suptitle(name, fontsize=25, color='k')
+        fig.tight_layout(rect=[0, 0.03, 1, 0.95])
+        
+        img = conv_img[0, :, :,  0]
+        ax.imshow(img, vmin=w_min, vmax=w_max, interpolation='bicubic', cmap='Greys_r')
+        
+        ax.set_xticks([])
+        ax.set_yticks([])
+        
+        plt.subplots_adjust(top=0.85)
+        plt.close(fig)
+        return fig
+        
+        
+    # create figure and axes
+    fig, axes = plt.subplots(min([grid_r, grid_c]),
+                             max([grid_r, grid_c]),
+                            figsize=(24,15))
+    fig.suptitle(name, fontsize=25, color='k')
+    fig.tight_layout(rect=[0, 0.03, 1, 0.95])
+    
+    # iterate filters
+    for l, ax in enumerate(axes.flat):
+        # get a single image
+        img = conv_img[0, :, :,  l]
+        # put it on the grid
+        ax.imshow(img, vmin=w_min, vmax=w_max, interpolation='bicubic', cmap='jet')
+        # remove any labels from the axes
+        ax.set_xticks([])
+        ax.set_yticks([])
+       
+    plt.close(fig)
+    return fig
+    
+    
