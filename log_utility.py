@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import tfplot
+import matplotlib.pyplot as plt
 
 # adapted from https://github.com/grishasergei/conviz/
 def prime_powers(n):
@@ -62,7 +63,7 @@ def plot_conv_weights(weights, channels_all=True):
     num_filters = weights.shape[3]
 
     # get number of grid rows and columns
-    grid_r, grid_c = log_util.get_grid_dim(num_filters)
+    grid_r, grid_c = get_grid_dim(num_filters)
     
     # create figure and axes
     fig, axes = plt.subplots(min([grid_r, grid_c]), max([grid_r, grid_c]))
@@ -92,14 +93,20 @@ def plot_conv_output(conv_img, name):
     :param name: string, name of convolutional layer
     :return: nothing, plots are saved on the disk
     """
-    w_min = np.min(conv_img)
-    w_max = np.max(conv_img)
+#     w_min = np.min(conv_img)
+#     w_max = np.max(conv_img)
+
+    w_min = 0.0
+    w_max = 1.0
+    
+    print(w_min)
+    print(w_max)
 
     # get number of convolutional filters
     num_filters = conv_img.shape[3]
 
     # get number of grid rows and columns
-    grid_r, grid_c = log_util.get_grid_dim(num_filters)
+    grid_r, grid_c = get_grid_dim(num_filters)
     
 
     if (min([grid_r, grid_c]) == 1 and max([grid_r, grid_c]) == 1):
