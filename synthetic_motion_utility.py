@@ -31,7 +31,7 @@ def add_motion_artifact(im, seed=777):
     vals = generate_random_range(0, 511, artifact_length=[10,60], gap_length=[50,120], start_ofset=[0,50])
     print(vals)
     
-    im_transformed_artifacted = add_artifact(im_transformed, regions=vals, max_lf=1200)
+    im_transformed_artifacted = add_artifact(im_transformed, regions=vals, max_lf=800)
 
     image = reconstruct(im_transformed_artifacted)
     image = np.uint8(image)
