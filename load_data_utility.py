@@ -1,10 +1,23 @@
 import pathlib
 import random
 import tensorflow as tf
+import data_augmentation_utility as da_util
 
 
 # Given a directory of data of the form: ~/data/labels/images.png
 
+# data augmentation methods in data_augmentation_utility.py
+
+def augment_image(image):
+                       
+#     image = da_util.rotate(image)
+
+    image = da_util.horiz_flip(image)
+    
+    image = da_util.translate(image)
+    image = da_util.crop(image)
+
+    return image
 
 # load an array of image paths
 def load_image_paths(path):

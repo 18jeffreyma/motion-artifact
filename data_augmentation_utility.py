@@ -1,16 +1,25 @@
 import tensorflow as tf
+import random
 
 def rotate(image):
     
     return tf.image.rot90(image, tf.random_uniform(shape=[], minval=0, maxval=4, 
                                                dtype=tf.int32))
 
-def flip(image):
+def horiz_flip(image):
     
     image = tf.image.random_flip_left_right(image)
+#     image = tf.image.random_flip_up_down(image)
+
+    return image
+
+def vert_flip(image):
+    
+#     image = tf.image.random_flip_left_right(image)
     image = tf.image.random_flip_up_down(image)
 
     return image
+
 
 def crop(image, range_start=0.8, range_end=1.0):
     
