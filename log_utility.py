@@ -63,7 +63,8 @@ def plot_conv_weights(weights, channels_all=True):
     num_filters = weights.shape[3]
 
     # get number of grid rows and columns
-    grid_r, grid_c = get_grid_dim(num_filters)
+    # switched dimensions FIX THIS LATER
+    grid_c, grid_r = get_grid_dim(num_filters)
     
     # create figure and axes
     fig, axes = plt.subplots(min([grid_r, grid_c]), max([grid_r, grid_c]))
@@ -106,6 +107,7 @@ def plot_conv_output(conv_img, name):
     num_filters = conv_img.shape[3]
 
     # get number of grid rows and columns
+
     grid_r, grid_c = get_grid_dim(num_filters)
     
 
@@ -127,9 +129,17 @@ def plot_conv_output(conv_img, name):
         
         
     # create figure and axes
-    fig, axes = plt.subplots(min([grid_r, grid_c]),
-                             max([grid_r, grid_c]),
-                            figsize=(24,15))
+    
+# VERTICAL MODE UNCOMMENT HERE
+#     fig, axes = plt.subplots(min([grid_r, grid_c]),
+#                              max([grid_r, grid_c]),
+#                             figsize=(24,15))
+    
+    
+    
+    fig, axes = plt.subplots(max([grid_r, grid_c]),
+                             min([grid_r, grid_c]),
+                            figsize=(15,24))
     fig.suptitle(name, fontsize=25, color='k')
     fig.tight_layout(rect=[0, 0.03, 1, 0.95])
     
