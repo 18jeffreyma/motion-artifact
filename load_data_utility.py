@@ -45,13 +45,36 @@ def split(image_paths, split=[0.6,0.2,0.2], seed=777):
     
     return train, evaluate, test
 
+
+def sobel_op(img):
+    
+    x = ndimage.sobel(img, axis=0)
+    y = ndimage.sobel(img, axis=1)
+    
+    h = np.hypot(x, y)
+
+    h *= 255.0 / np.max(h)
+
+    img = np.asarray(h, dtype=np.uint8)
+    
+    return img
+
 # preprocessing functions
-def preprocess_image(image, norm=True):
+def preprocess_image(image, norm=True, sobel=False):
     image = tf.image.decode_png(image, channels=1)
     image = tf.cast(image, tf.float32)
     image = tf.reshape(image, shape=[512,512])
     
+    print("pre-processing")
+    
+    if (sobel):
+        print("using sobel")
+        image = tf.py_func(sobel_op, [image], tf.float32)
+        
+        # do stuff
+    
     if (norm):
+        print("using norm")
         image = image / 255.0
     
 #     image = tf.div(
@@ -65,19 +88,19 @@ def preprocess_image(image, norm=True):
 #        )
 #     )
     
-    
     return image
+    
 
-def load_and_preprocess_image(path, augment=True, norm=True):
+def load_and_preprocess_image(path, augment=True, norm=True, sobel=False):
     image = tf.read_file(path)
-    image = preprocess_image(image, norm=norm)
+    image = preprocess_image(image, norm=norm, sobel=sobel)
     
     if (augment):
         image = augment_image(image[:,:,None])
     
     return image
 
-def load(path, image_paths, training=True, augment=True, batch_size=64, shuffle=True, norm=True, drop_remainder=False):
+def load(path, image_paths, training=True, augment=True, batch_size=64, shuffle=True, norm=True, drop_remainder=False, sobel= False):
     with tf.device("/CPU:0"):
         # data root
         data_root = pathlib.Path(path)
@@ -96,7 +119,7 @@ def load(path, image_paths, training=True, augment=True, batch_size=64, shuffle=
         path_ds = tf.data.Dataset.from_tensor_slices(image_paths)
 
         # get image tensors by mapping function over the path dataset
-        image_ds = path_ds.map(lambda path : load_and_preprocess_image(path, augment=augment, norm=norm))
+        image_ds = path_ds.map(lambda path : load_and_preprocess_image(path, augment=augment, norm=norm, sobel=sobel))
 
         # create label dataset
         label_ds = tf.data.Dataset.from_tensor_slices(tf.cast(all_image_labels, tf.int64))
