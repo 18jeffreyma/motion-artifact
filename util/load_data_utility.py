@@ -1,7 +1,7 @@
 import pathlib
 import random
 import tensorflow as tf
-import data_augmentation_utility as da_util
+import util.data_augmentation_utility as da_util
 
 
 # Given a directory of data of the form: ~/data/labels/images.png
