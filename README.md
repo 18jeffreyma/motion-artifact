@@ -1,8 +1,8 @@
 # motion artifact detection
 
-2019 Summer Undergraduate Research Fellowship project at the Magnetic Resonance Systems Research Laboratory (MRSRL)
+2019 Summer Undergraduate Research Fellowship project at the Magnetic Resonance Systems Research Laboratory (MRSRL).
 
-Working on a neural network to detect motion artifacts in MRI slice imaging
+Building a convolutional neural network to detect motion artifacts in MRI slice imaging.
 
 ## To add repository for contributors
 
