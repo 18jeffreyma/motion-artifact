@@ -1,7 +1,9 @@
-__pycache__
-**/*.ipynb_checkpoints
+# don't track these folders
+__pycache__/
+.ipynb_checkpoints/
+**/*.ipynb_checkpoints/
 
 .DS_Store
 **/*.DS_Store
 
-data
+data/
