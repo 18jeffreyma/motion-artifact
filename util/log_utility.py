@@ -114,7 +114,7 @@ def plot_conv_output(conv_img, name):
     if (min([grid_r, grid_c]) == 1 and max([grid_r, grid_c]) == 1):
         
         fig, ax = plt.subplots(figsize=(24,24))   
-        fig.suptitle(name, fontsize=25, color='k')
+#         fig.suptitle(name, fontsize=25, color='k')
         fig.tight_layout(rect=[0, 0.03, 1, 0.95])
         
         img = conv_img[0, :, :,  0]
@@ -123,7 +123,7 @@ def plot_conv_output(conv_img, name):
         ax.set_xticks([])
         ax.set_yticks([])
         
-        plt.subplots_adjust(top=0.85)
+#         plt.subplots_adjust(top=0.85)
         plt.close(fig)
         return fig
         
@@ -131,16 +131,16 @@ def plot_conv_output(conv_img, name):
     # create figure and axes
     
 # VERTICAL MODE UNCOMMENT HERE
-#     fig, axes = plt.subplots(min([grid_r, grid_c]),
-#                              max([grid_r, grid_c]),
-#                             figsize=(24,15))
+    fig, axes = plt.subplots(min([grid_r, grid_c]),
+                             max([grid_r, grid_c]),
+                            figsize=(24,int(24 * min([grid_r, grid_c]) * 1.0 / max([grid_r, grid_c]))))
     
+# horizontal mode uncomment here
     
-    
-    fig, axes = plt.subplots(max([grid_r, grid_c]),
-                             min([grid_r, grid_c]),
-                            figsize=(15,24))
-    fig.suptitle(name, fontsize=25, color='k')
+#     fig, axes = plt.subplots(max([grid_r, grid_c]),
+#                              min([grid_r, grid_c]),
+#                             figsize=(15,24))
+    # fig.suptitle(name, fontsize=25, color='k')
     fig.tight_layout(rect=[0, 0.03, 1, 0.95])
     
     # iterate filters
